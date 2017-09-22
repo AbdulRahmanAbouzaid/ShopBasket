@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 Route::get('/categories','CategoriesController@getCategories');
 Route::get('/categories/create','CategoriesController@create');
+Route::post('/categories', 'CategoriesController@store');
 Route::get('/categories/{category}','CategoriesController@viewCategory');
 
 Route::get('/products/add','ProductsController@create');
+Route::post('/products', 'ProductsController@store');
 Route::get('/products/{product}','ProductsController@show');

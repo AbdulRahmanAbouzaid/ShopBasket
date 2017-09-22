@@ -18,4 +18,16 @@ class ProductsController extends Controller
     {
     	return view('products.addProduct');
     }
+
+    public function store()
+    {
+    	
+    	$this->validate(request(), [
+    		
+    		'discount_pct' => 'integer|between:1,100'
+
+    	]);
+
+
+    }
 }

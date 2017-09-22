@@ -31,5 +31,20 @@ class CategoriesController extends Controller
 
     }
 
+    public function store()
+    {
+
+        $this->validate(request(), [
+            
+            'max_discount_pct' => 'numeric|between:1,100'
+
+        ]);
+
+        Category::create(request(['code', 'name', 'max_discount_pct']));
+
+        return redirect('/categories');
+
+    }
+
 
 }
