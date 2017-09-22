@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/categories','CategoriesController@getCategories');
+Route::get('/categories/create','CategoriesController@create');
+Route::get('/categories/{category}','CategoriesController@viewCategory');
+
+Route::get('/products/add','ProductsController@create');
+Route::get('/products/{product}','ProductsController@show');
