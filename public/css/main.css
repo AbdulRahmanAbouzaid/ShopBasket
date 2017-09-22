@@ -829,7 +829,7 @@ h2.title:before{
   padding-right: 0;
 }
 
-.features_items{
+.products{
 	overflow:hidden;
 }
 
@@ -971,7 +971,7 @@ h2.title {
   color: #FFFFFF;
 }
 
-/*.choose {
+.choose {
   border-top: 1px solid #F7F7F0;
 }
 
@@ -1039,7 +1039,7 @@ h2.title {
   line-height: 1.42857;
   margin-right:0;
 }
-*/
+
 .recommended_items {
   overflow: hidden;
 }
@@ -1068,7 +1068,7 @@ h2.title {
 }
 
 .our_partners{
- /* overflow:hidden;
+  overflow:hidden;
 }
 
 .our_partners ul {

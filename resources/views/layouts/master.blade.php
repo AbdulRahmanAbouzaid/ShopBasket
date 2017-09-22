@@ -27,20 +27,17 @@
 
 <body>
 	
-	<header id="header"><!--header-->
-		
-		@include('layouts.nav')
-			
+	<header id="header"><!--header-->	
+		@include('layouts.nav')	
 	</header><!--/header-->
 	
-	
-	@yield('content')
+	<div class="container">
+		@yield('content')
+	</div>
 
 
 	<footer id="footer"><!--Footer-->
-
 		@include('layouts.footer')
-
 	</footer>
 	
 

@@ -17,9 +17,17 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('code')->unique();
             $table->string('name');
+            $table->decimal('price');
             $table->integer('quantity');
             $table->decimal('discount_pct');
             $table->timestamps();
+        });
+
+        Schema::create('category_product', function (Blueprint $table) {
+            $table->integer('category_id');
+            $table->integer('product_id');
+            $table->primary(['category_id', 'product_id']);
+            
         });
     }
 
@@ -31,5 +39,7 @@ class CreateProductsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('products');
+        Schema::dropIfExists('category_product');
+
     }
 }
