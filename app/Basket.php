@@ -20,8 +20,8 @@ class Basket extends Model
     {
 
 
-    	//Get  Current status
-    	$basket = Basket::where('status','hanging');
+    	//Get Current Basket
+    	$basket = Basket::where('status','hanging')->first();
 
     	//if exist return it , else Create new One
     	if(!$basket){
@@ -33,5 +33,25 @@ class Basket extends Model
 			return $basket;
     
 	}
+
+
+    public function getTotalPrice()
+    {
+
+        $totalPrice = 0;
+
+        foreach ($this->products as $product) {
+            
+            $price = $product->getPrice();
+
+            $quantity = $product->pivot->quantity;
+
+            $totalPrice += $price * $quantity;
+
+        }
+
+        return $totalPrice;
+
+    }
 
 }
