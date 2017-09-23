@@ -20,11 +20,6 @@ class Category extends Model
 
     }
 
-    public function isEmpty()
-    {
     
-    	return !$this->products->count() ? true : false;
-    	
-    }
 
 }

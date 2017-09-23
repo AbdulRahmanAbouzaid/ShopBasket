@@ -28,15 +28,8 @@
 					<span>
 					
 						<span>
-						@if(!$product->hasDiscount())
 
-							$ {{$product->price}} US
-
-						@else
-
-							${{$product->priceAfterDiscount()}}
-
-						@endif
+							$ {{$product->getPrice()}} US
 
 						</span>
 
@@ -56,7 +49,13 @@
 						
 							</button>
 
+
+
 						</form>
+
+						<a href="/products/delete/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Delete Product</a>
+
+						<a href="/products/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>update Product</a>
 					
 					</span>
 					
@@ -76,7 +75,7 @@
 
 						</p>
 					
-						<p><b>Actual Price: </b> % {{$product->price}}</p>
+						<p><b>Actual Price: </b> $ {{$product->price}}</p>
 					
 					@endif
 

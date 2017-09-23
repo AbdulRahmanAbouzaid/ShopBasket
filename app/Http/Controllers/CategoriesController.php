@@ -9,7 +9,7 @@ class CategoriesController extends Controller
 {
     public function getCategories(){
 
-    	$ctgrs = Category::all();
+    	$ctgrs = Category::has('products')->get();
 
     	return view('categories.allCategories', compact('ctgrs'));
 
@@ -68,6 +68,12 @@ class CategoriesController extends Controller
         return redirect('/categories');
 
     }
+
+
+    // public function DeleteProduct($)
+    // {
+    //     $this->products()->detach($product)
+    // }
 
 
     public function destroy(Category $category)

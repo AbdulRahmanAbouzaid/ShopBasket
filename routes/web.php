@@ -22,12 +22,16 @@ Route::get('/categories/{category}','CategoriesController@viewCategory');
 Route::get('/categories/update/{category}', 'CategoriesController@update');
 Route::post('/categories/update/{category}', 'CategoriesController@confirmUpdate');
 Route::get('/categories/delete/{category}', 'CategoriesController@destroy');
+// Route::get('/categories/delete/{product}', 'CategoriesController@destroy');
 
 Route::get('/products/add','ProductsController@create');
 Route::post('/products', 'ProductsController@store');
 Route::get('/products/{product}','ProductsController@show');
+Route::get('/products/update/{product}', 'ProductsController@update');
+Route::post('/products/update/{product}', 'ProductsController@confirmUpdate');
 Route::get('/products/delete/{product}', 'ProductsController@destroy');
 
-Route::get('/baskets/{basket}','BasketsController@show');
+Route::get('/basket','BasketsController@show');
 Route::post('/basket/add-product/{product}','BasketsController@addProduct');
+Route::get('/basket/delete-products/{product}', 'BasketsController@destroy');
 

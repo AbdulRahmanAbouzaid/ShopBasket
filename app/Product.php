@@ -39,17 +39,31 @@ class Product extends Model
 
     	return $this->discount_pct != 0 ? true : false;
 
-
     }
 
 
-    /* If Product has Discount, Return The New Price */
-    public function priceAfterDiscount(){
+    public function categoriesNotBelong()
+    {
+        $ids = $this->categories()->pluck('id');
 
-    	$discount = ($this->discount_pct * $this->price)/100;
-    	$newPrice = $this->price - $discount;
+        return Category::whereNotIn('id', $ids)->get();
 
-    	return $newPrice;
+    }
+
+    /* If Product has Discount, Return The New Price .. If not Return actual price */
+    public function getPrice(){
+
+        $price = $this->price;
+
+        if($this->hasDiscount()){
+
+        	$discount = ($this->discount_pct * $this->price)/100;
+        	$price = $this->price - $discount;
+
+        }
+
+
+    	return $price;
 
     }
 

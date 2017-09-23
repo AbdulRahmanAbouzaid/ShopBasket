@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
-        view()->composer('products.addProduct', function($view){
+        view()->composer(['products.addProduct', 'products.update'], function($view){
 
             $categories = \App\Category::all();
 

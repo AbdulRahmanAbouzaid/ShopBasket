@@ -39,13 +39,42 @@ class ProductsController extends Controller
 
     }
 
+    public function update(Product $product)
+    {
+        
+        return view('products.update', compact('product'));
+
+    }
+
+    public function confirmUpdate(Product $product)
+    {
+        
+        $product->name = request('name');
+
+        $product->code = request('code');
+
+        $product->discount_pct = request('discount_pct');
+
+        $product->price = request('price');
+
+        $product->quantity = request('quantity');       
+
+        $product->save();
+
+        $product->categories()->detach();
+
+        $product->categories()->attach(request('category'));
+
+        return redirect('/');
+    }
+
 
     public function destroy(Product $product)
     {
         
         $product->delete();
 
-        return redirect()->back();
+        return redirect('/');
 
     }
 }

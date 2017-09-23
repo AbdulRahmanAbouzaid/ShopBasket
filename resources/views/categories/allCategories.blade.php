@@ -19,7 +19,7 @@
 						</div>
 
 						<div class="col-sm-6">
-							<img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+							<img src="/images/home/girl1.jpg" class="girl img-responsive" alt="" />
 						</div>
 
 					</div>
@@ -45,7 +45,7 @@
 	
 						<div class="productinfo text-center">
 	
-							<img src="images/home/product1.jpg" alt="" />
+							<img src="/images/home/product1.jpg" alt="" />
 	
 							<h2>{{$cat->name}}</h2>
 	
