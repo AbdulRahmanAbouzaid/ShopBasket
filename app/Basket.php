@@ -16,6 +16,8 @@ class Basket extends Model
 
     }
 
+
+    /* Get The Basket That the User should Use*/
     public function scopeGetCurrentBasket()
     {
 
@@ -34,24 +36,57 @@ class Basket extends Model
     
 	}
 
-
-    public function getTotalPrice()
+    /* Get Basket Price Before Discount */
+    public function totalActualPrice()
     {
 
-        $totalPrice = 0;
+        $actualTotal = 0; 
 
         foreach ($this->products as $product) {
             
-            $price = $product->getPrice();
+            $price = $product->price;
 
             $quantity = $product->pivot->quantity;
 
-            $totalPrice += $price * $quantity;
+            $actualTotal += $price * $quantity;
 
         }
 
-        return $totalPrice;
+        return $actualTotal;
 
+    }
+
+    /* Get Basket Price After Discount */
+    public function totalNetPrice()
+    {
+
+        $netTotal = 0;
+
+        foreach ($this->products as $product) {
+            
+            $price = $product->netPrice();
+
+            $quantity = $product->pivot->quantity;
+
+            $netTotal += $price * $quantity;
+
+        }
+
+        return $netTotal;
+
+    }
+
+
+    public function discountPercentage()
+    {
+
+        $total = $this->totalActualPrice();
+
+        $discount = $total - $this->totalNetPrice();
+
+        $discount_pct = ($discount / $total) * 100;
+
+        return $discount_pct;
     }
 
 }

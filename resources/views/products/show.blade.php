@@ -29,7 +29,7 @@
 					
 						<span>
 
-							$ {{$product->getPrice()}} US
+							$ {{$product->netPrice()}} US
 
 						</span>
 

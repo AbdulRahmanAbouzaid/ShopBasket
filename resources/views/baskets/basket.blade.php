@@ -30,12 +30,12 @@
 
 							<td class="description"></td>
 
-							<td class="price">Price</td>
+							<td class="price">Product Price</td>
 
 							<td class="quantity">Quantity</td>
 
-<!-- 							<td class="total">Total</td>
- -->
+							<td class="total">Total Price</td>
+
 							<td>Delete</td>
 
 						</tr>
@@ -64,7 +64,7 @@
 
 								<td class="cart_price">
 
-									<p>${{$product->getPrice()}}</p>
+									<p>${{$product->netPrice()}}</p>
 
 								</td>
 
@@ -72,17 +72,17 @@
 
 									<div class="cart_quantity_button">
 
-										<input class="cart_quantity_input" type="number" name="quantity[]" value="{{$product->pivot->quantity}}">
+										<input class="cart_quantity_input" type="number" name="quantity[]" value="{{$product->pivot->quantity}}" readonly>
 
 									</div>
 
 								</td>
 
-								<!-- <td class="cart_total">
+								<td class="cart_total">
 
-									<p class="cart_total_price">$59</p>
+									<p class="cart_total_price">${{$product->quantitiesPrice()}}</p>
 
-								</td> -->
+								</td>
 
 								<td class="cart_delete">
 
@@ -114,18 +114,14 @@
 				<div class="col-sm-12">
 					<div class="total_area">
 						<ul>
-							<li>Cart Sub Total <span>${{$basket->getTotalPrice()}}</span></li>
-							<li>Eco Tax <span>$2</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>$61</span></li>
+							<li>Basket Net Total <span>${{$basket->totalNetPrice()}}</span></li>
 						</ul>
 
 						<div class="row">
 							<center>
-								<a class="btn btn-default update" href="">Confirm Purchasing</a>
-								<a class="btn btn-default check_out" href="">Update</a>
+								<a class="btn btn-default update" href="/basket/confirm-purchase">Confirm Purchasing</a>
 								<a class="btn btn-default update" href="">Cancel</a>
-								<a class="btn btn-default check_out" href="">Delete Basket</a>
+								<a class="btn btn-default update" href="">Delete Basket</a>
 
 							</center>
 						</div>

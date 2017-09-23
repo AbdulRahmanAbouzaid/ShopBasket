@@ -50,15 +50,22 @@ class Product extends Model
 
     }
 
-    /* If Product has Discount, Return The New Price .. If not Return actual price */
-    public function getPrice(){
+    public function discountPrice()
+    {
+
+        return ($this->discount_pct * $this->price)/100;
+        
+    }
+
+    /* If Product has Discount, Return The New Price .. If not, Return actual price */
+    public function netPrice(){
 
         $price = $this->price;
 
         if($this->hasDiscount()){
 
-        	$discount = ($this->discount_pct * $this->price)/100;
-        	$price = $this->price - $discount;
+        	$discount = $this->discountPrice();
+        	$price -= $discount;
 
         }
 
@@ -66,5 +73,13 @@ class Product extends Model
     	return $price;
 
     }
+
+
+    public function quantitiesPrice()
+    {
+        
+        return $this->netPrice() * $this->pivot->quantity;
+    }
+
 
 }
