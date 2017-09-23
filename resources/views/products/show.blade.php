@@ -11,7 +11,7 @@
 
 				<div class="view-product">
 
-					<img src="/images/product-details/1.jpg" alt="" /><!--  Product Image -->
+					<img src="/images/product-details/1.jpg" alt="" /> <!--  Product Image -->
 
 				</div>
 
@@ -39,18 +39,24 @@
 						@endif
 
 						</span>
+
+						<form action="/basket/add-product/{{$product->id}}" method="POST">
+
+							{{ csrf_field() }}
 					
-						<label>Quantity:</label>
-					
-						<input type="number" value="1" min="1" max="{{$product->quantity}}" />
-					
-						<button type="button" class="btn btn-fefault cart">
-					
-							<i class="fa fa-shopping-cart"></i>
-					
-							Add to cart
-					
-						</button>
+							<label>Quantity:</label>
+						
+							<input type="number" name="quantity" value="1" min="1" max="{{$product->quantity}}" />
+						
+							<button type="submit" class="btn btn-fefault cart" name="addCart">
+						
+								<i class="fa fa-shopping-cart"></i>
+						
+								Add to cart
+						
+							</button>
+
+						</form>
 					
 					</span>
 					

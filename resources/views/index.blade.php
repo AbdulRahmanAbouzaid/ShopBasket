@@ -61,8 +61,13 @@
 
 				<div class="col-sm-9 padding-right">
 
-					<div class="products"><!--products-->	
-						@include('products.product')	
+					<div class="products"><!--products-->
+						@foreach($products as $product)	
+							
+							@include('products.product')	
+
+						@endforeach
+
 					</div><!--products-->
 
 				</div>

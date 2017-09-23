@@ -62,11 +62,20 @@
 
 	            <div class="form-group col-md-8">
 
-	            	<label for="category" class="col-md-4">Product Name</label>
+	            	<label for="category" class="col-md-4">Category</label>
 
-	                 <input type="text" name="category" class="col-md-8" required="required" placeholder="category Name" multiple>
+	            	<div class="col-md-8">
+
+		            	@foreach($categories as $category)
+
+		                 	<input type="checkbox" name="category[]" value="{{$category->id}}" > {{$category->name}} <br/>
+
+		                 @endforeach
+
+	                 </div>
 	           
-	            </div>                   
+	            </div> 
+
 	            
 	            <div class="form-group col-md-12">
 	            

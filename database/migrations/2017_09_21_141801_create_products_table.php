@@ -29,6 +29,14 @@ class CreateProductsTable extends Migration
             $table->primary(['category_id', 'product_id']);
             
         });
+
+        Schema::create('basket_product', function (Blueprint $table) {
+            $table->integer('basket_id');
+            $table->integer('product_id');
+            $table->integer('quantity');
+            $table->primary(['basket_id', 'product_id']);
+            
+        });
     }
 
     /**
@@ -40,6 +48,7 @@ class CreateProductsTable extends Migration
     {
         Schema::dropIfExists('products');
         Schema::dropIfExists('category_product');
+        Schema::dropIfExists('basket_product');
 
     }
 }

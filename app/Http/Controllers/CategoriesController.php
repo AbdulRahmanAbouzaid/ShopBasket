@@ -47,4 +47,36 @@ class CategoriesController extends Controller
     }
 
 
+    public function update(Category $category)
+    {
+            
+        return view('categories.update', compact('category'));
+
+    }
+
+    public function confirmUpdate(Category $category)
+    {
+        
+        $category->name = request('name');
+
+        $category->code = request('code');
+
+        $category->max_discount_pct = request('max_discount_pct');
+
+        $category->save();
+
+        return redirect('/categories');
+
+    }
+
+
+    public function destroy(Category $category)
+    {
+        
+        $category->delete();
+
+        return redirect('/categories');
+
+    }
+
 }

@@ -24,10 +24,28 @@ class ProductsController extends Controller
     	
     	$this->validate(request(), [
     		
-    		'discount_pct' => 'integer|between:1,100'
+    		'discount_pct' => 'integer|between:0,100'
 
     	]);
 
+        $product = new Product(request(['code', 'name', 'price', 'quantity', 'discount_pct']));
+
+        $product->save();
+
+        $product->categories()->attach(request('category'));
+
+        return redirect('/');
+
+
+    }
+
+
+    public function destroy(Product $product)
+    {
+        
+        $product->delete();
+
+        return redirect()->back();
 
     }
 }

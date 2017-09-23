@@ -19,7 +19,15 @@ Route::get('/categories','CategoriesController@getCategories');
 Route::get('/categories/create','CategoriesController@create');
 Route::post('/categories', 'CategoriesController@store');
 Route::get('/categories/{category}','CategoriesController@viewCategory');
+Route::get('/categories/update/{category}', 'CategoriesController@update');
+Route::post('/categories/update/{category}', 'CategoriesController@confirmUpdate');
+Route::get('/categories/delete/{category}', 'CategoriesController@destroy');
 
 Route::get('/products/add','ProductsController@create');
 Route::post('/products', 'ProductsController@store');
 Route::get('/products/{product}','ProductsController@show');
+Route::get('/products/delete/{product}', 'ProductsController@destroy');
+
+Route::get('/baskets/{basket}','BasketsController@show');
+Route::post('/basket/add-product/{product}','BasketsController@addProduct');
+
