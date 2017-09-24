@@ -1,3 +1,6 @@
+<?php $basket_active = 'active'; ?>
+
+
 @extends('layouts.master')
 
 @section('content')
@@ -104,6 +107,8 @@
 
 	</section> <!--/#cart_items-->
 
+	@if( $basket->products()->first() )
+
 	<section id="do_action">
 		<div class="container">
 			<div class="heading">
@@ -120,8 +125,8 @@
 						<div class="row">
 							<center>
 								<a class="btn btn-default update" href="/basket/confirm-purchase">Confirm Purchasing</a>
-								<a class="btn btn-default update" href="">Cancel</a>
-								<a class="btn btn-default update" href="">Delete Basket</a>
+								<a class="btn btn-default update" href="/basket/cancel">Cancel</a>
+								<a class="btn btn-default update" href="/basket/delete">Delete Basket</a>
 
 							</center>
 						</div>
@@ -130,5 +135,7 @@
 			</div>
 		</div>
 	</section>
+
+	@endif
 
 @endsection

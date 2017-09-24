@@ -10,10 +10,19 @@ use App\Invoice;
 class BasketsController extends Controller
 {
 
-	public function show()
-    {
+    private $basket; 
 
-        $basket = Basket::getCurrentBasket();
+    public function __construct()
+    {
+        
+        $this->basket = Basket::getCurrentBasket();
+
+    }
+
+
+	public function show()
+    {       
+        $basket = $this->basket;
 
     	return view('baskets.basket', compact('basket'));
 
@@ -22,9 +31,8 @@ class BasketsController extends Controller
     public function addProduct(Product $product)
     {
     	
-    	$basket = Basket::getCurrentBasket();
 
-    	$basket->products()->attach($product,['quantity' => request('quantity')]);
+    	$this->basket->products()->attach($product,['quantity' => request('quantity')]);
 
     	return redirect('/basket');
 
@@ -32,11 +40,10 @@ class BasketsController extends Controller
 
 
 
-    public function destroy(Product $product)
+    public function detachProduct(Product $product)
     {
-        $basket = Basket::getCurrentBasket();
 
-        $basket->products()->detach($product);
+        $this->basket->products()->detach($product);
 
         return redirect('/basket');
 
@@ -46,29 +53,54 @@ class BasketsController extends Controller
     public function confirmPurchase()
     {
         
-        $basket = Basket::getCurrentBasket();
 
-        $invoice = new Invoice([
+        $invoice = Invoice::create([
 
-            'basket_id' => $basket->id,
+            'inv_number' => hexdec(uniqid()),
 
-            'inv_total' => $basket->totalActualPrice(),
+            'basket_id' => $this->basket->id,
 
-            'inv_discount' => $basket->discountPercentage(),
+            'inv_total' => $this->basket->totalActualPrice(),
 
-            'inv_net' => $basket->totalNetPrice()
+            'inv_discount' => $this->basket->discountPercentage(),
+
+            'inv_net' => $this->basket->totalNetPrice()
 
         ]);
 
-        $invoice->save();
+        $this->basket->status = 'confirmed';
 
-        return redirect('/basket/invoice/'.$invoice);
+        return redirect('/basket/invoice/'.$invoice->id);
 
     }
+
 
     public function showInvoice(Invoice $invoice)
     {
         
         return view('baskets.invoice', compact('invoice'));
+    }
+
+
+
+    public function cancelling()
+    {
+        
+        $this->basket->status = 'cancelled';
+
+        $this->basket->save();
+
+        return redirect('/');
+
+    }
+
+
+    public function destroy()
+    {
+
+        $this->basket->delete();
+
+        return redirect('/');
+
     }
 }

@@ -7,6 +7,7 @@ use App\Category;
 
 class CategoriesController extends Controller
 {
+
     public function getCategories(){
 
     	$ctgrs = Category::has('products')->get();
@@ -26,6 +27,12 @@ class CategoriesController extends Controller
 
     public function create()
     {
+        
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
 
     	return view('categories.newCategory');
 
@@ -33,6 +40,12 @@ class CategoriesController extends Controller
 
     public function store()
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
 
         $this->validate(request(), [
             
@@ -49,13 +62,25 @@ class CategoriesController extends Controller
 
     public function update(Category $category)
     {
-            
-        return view('categories.update', compact('category'));
 
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }  
+        
+        return view('categories.update', compact('category'));
+        
     }
 
     public function confirmUpdate(Category $category)
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
         
         $category->name = request('name');
 
@@ -66,6 +91,7 @@ class CategoriesController extends Controller
         $category->save();
 
         return redirect('/categories');
+
 
     }
 
@@ -78,6 +104,12 @@ class CategoriesController extends Controller
 
     public function destroy(Category $category)
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
         
         $category->delete();
 

@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/login','LogsController@viewForm');
+Route::post('/logging','LogsController@loggingIn');
+Route::get('/logout','LogsController@destroy');
+
 /* All Categories-Based Routes*/
 Route::get('/categories','CategoriesController@getCategories');
 
@@ -55,6 +59,10 @@ Route::get('/basket/confirm-purchase','BasketsController@confirmPurchase');
 
 Route::get('/basket/invoice/{invoice}','BasketsController@showInvoice');
 
-Route::get('/basket/delete-products/{product}', 'BasketsController@destroy');
+Route::get('/basket/delete-products/{product}', 'BasketsController@detachProduct');
+
+Route::get('/basket/cancel', 'BasketsController@cancelling');
+
+Route::get('/basket/delete', 'BasketsController@destroy');
 
 

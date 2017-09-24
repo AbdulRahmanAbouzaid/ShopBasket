@@ -16,11 +16,24 @@ class ProductsController extends Controller
 
     public function create()
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
+
     	return view('products.addProduct');
     }
 
     public function store()
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
     	
     	$this->validate(request(), [
     		
@@ -41,6 +54,12 @@ class ProductsController extends Controller
 
     public function update(Product $product)
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
         
         return view('products.update', compact('product'));
 
@@ -48,6 +67,12 @@ class ProductsController extends Controller
 
     public function confirmUpdate(Product $product)
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
         
         $product->name = request('name');
 
@@ -71,6 +96,12 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
+
+        if(!auth()->user()->is_admin){
+
+            return redirect('/');
+
+        }
         
         $product->delete();
 
