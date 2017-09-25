@@ -26,7 +26,13 @@
 
 					<ul class="nav navbar-nav">
 
-						<li><a href="#" class="{{$account_active or ''}}"><i class="fa fa-user"></i> Account</a></li>
+						@if(auth()->check())
+
+							<li><a href="#" class="{{$account_active or ''}}"><i class="fa fa-user"></i>
+								{{auth()->user()->name}}	
+							</a></li>
+
+						@endif
 
 						<li><a href="#" class="{{$products_active or ''}}"><i class="fa fa-barcode"></i> Products</a></li>
 
@@ -34,7 +40,7 @@
 
 						<li><a href="/basket" class="{{$basket_active or ''}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 
-						<li><a href="login.html" class="{{$login_active or ''}}"><i class="fa fa-lock"></i> Login</a></li>
+						<li><a href="/login" class="{{$login_active or ''}}"><i class="fa fa-lock"></i> Login</a></li>
 
 					</ul>
 

@@ -13,11 +13,16 @@
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
 
-Route::get('/login','LogsController@viewForm');
-Route::post('/logging','LogsController@loggingIn');
+Route::get('/login','LogsController@viewForm')->name('login');
+
+Route::post('/login','LogsController@restore');
+
 Route::get('/logout','LogsController@destroy');
+
+Route::post('/register','LogsController@store');
+
 
 /* All Categories-Based Routes*/
 Route::get('/categories','CategoriesController@getCategories');
@@ -34,7 +39,7 @@ Route::post('/categories/update/{category}', 'CategoriesController@confirmUpdate
 
 Route::get('/categories/delete/{category}', 'CategoriesController@destroy');
 
-// Route::get('/categories/delete/{product}', 'CategoriesController@destroy');
+Route::get('/categories/{category}/delete/{product}', 'CategoriesController@detachProduct');
 
 /* All Products-Routes*/
 Route::get('/products/add','ProductsController@create');

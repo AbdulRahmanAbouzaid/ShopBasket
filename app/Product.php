@@ -82,4 +82,16 @@ class Product extends Model
     }
 
 
+    public function decreaseQuantity()
+    {
+        
+        $quantity = $this->quantity - $this->pivot->quantity;
+
+        $this->quantity = $quantity;
+
+        $this->save(); 
+
+    }
+
+
 }

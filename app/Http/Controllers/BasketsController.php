@@ -14,14 +14,21 @@ class BasketsController extends Controller
 
     public function __construct()
     {
-        
-        $this->basket = Basket::getCurrentBasket();
 
+        $this->middleware('auth');
+
+        $this->middleware(function ($request, $next) {
+            
+            $this->basket = auth()->user()->getCurrentBasket();
+
+            return $next($request);
+        });
     }
 
 
 	public function show()
     {       
+
         $basket = $this->basket;
 
     	return view('baskets.basket', compact('basket'));
@@ -52,7 +59,6 @@ class BasketsController extends Controller
 
     public function confirmPurchase()
     {
-        
 
         $invoice = Invoice::create([
 
@@ -69,6 +75,12 @@ class BasketsController extends Controller
         ]);
 
         $this->basket->status = 'confirmed';
+
+        foreach ($this->basket->products as $product) {
+
+            $product->decreaseQuantity();
+            
+        }
 
         return redirect('/basket/invoice/'.$invoice->id);
 

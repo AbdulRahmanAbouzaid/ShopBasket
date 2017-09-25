@@ -35,7 +35,7 @@
 
 <h2 class="title text-center">Categories</h2>
 
-	@foreach($ctgrs as $cat)
+	@foreach($categories as $category)
 
 		<div class="col-sm-3">
 	
@@ -43,26 +43,27 @@
 	
 				<div class="single-products">
 	
-						<div class="productinfo text-center">
-	
-							<img src="/images/home/product1.jpg" alt="" />
-	
-							<h2>{{$cat->name}}</h2>
-	
+					<div class="productinfo text-center">
+
+						<img src="/images/home/product1.jpg" alt="" />
+
+						<h2>{{$category->name}}</h2>
+
+					</div>
+
+					<div class="product-overlay">
+
+						<div class="overlay-content">
+
+							<h2>{{$category->name}}</h2>
+
+							<a href="/categories/{{$category->name}}" class="btn btn-default add-to-cart">
+							<i class="fa fa-shopping-cart"></i>View Collection</a>
+					
 						</div>
-	
-						<div class="product-overlay">
-	
-							<div class="overlay-content">
-	
-								<h2>{{$cat->name}}</h2>
-	
-								<a href="/categories/{{$cat->name}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"
-								></i>View Collection</a>
-						
-							</div>
-						
-						</div>
+					
+					</div>
+
 				</div>
 				
 			</div>

@@ -16,14 +16,21 @@ class Basket extends Model
 
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
     /* Get The Basket That the User should Use*/
-    public function scopeGetCurrentBasket()
+    public function scopeGetCurrentBasket($user_id = null)
     {
 
 
     	//Get Current Basket
-    	$basket = Basket::where('status','hanging')->first();
+    	$basket = Basket::where('user_id',$user_id)
+                        ->where('status','hanging')
+                        ->first();
 
     	//if exist return it , else Create new One
     	if(!$basket){

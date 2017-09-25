@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password',
+        'name', 'password','is_admin'
     ];
 
     /**
@@ -26,5 +26,39 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function baskets()
+    {
+
+        return $this->hasMany(Basket::class);
+
+    }
+
+
+    public function getCurrentBasket()
+    {
+        //$this->baskets()->where('status','hangin')
+
+        $basket = $this->baskets()
+                       ->where('status','hanging')
+                       ->first();
+
+        //if exist return it , else Create new One
+        if(!$basket){
+            
+            $newBasket = new Basket([
+                
+                'number' => 4,
+                'status' => 'hanging'
+
+            ]);
+
+            $basket = $this->baskets()->save($newBasket);
+
+        }
+            
+        return $basket;
+    }
 
 }

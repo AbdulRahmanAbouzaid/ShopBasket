@@ -7,6 +7,16 @@ use App\Product;
 
 class ProductsController extends Controller
 {
+
+    public function __construct()
+
+    {
+
+        $this->middleware('auth')->except('show');
+
+    }
+
+
     public function show(Product $product)
     {
 

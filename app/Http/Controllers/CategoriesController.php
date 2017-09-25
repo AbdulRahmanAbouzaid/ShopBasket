@@ -4,15 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Product;
 
 class CategoriesController extends Controller
 {
 
+    public function __construct()
+
+    {
+
+        $this->middleware('auth')->except(['getCategories','viewCategory']);
+
+    }
+
+
     public function getCategories(){
 
-    	$ctgrs = Category::has('products')->get();
+    	$categories = Category::has('products')->get();
 
-    	return view('categories.allCategories', compact('ctgrs'));
+    	return view('categories.allCategories', compact('categories'));
 
     }
 
@@ -96,10 +106,14 @@ class CategoriesController extends Controller
     }
 
 
-    // public function DeleteProduct($)
-    // {
-    //     $this->products()->detach($product)
-    // }
+    public function detachProduct(Category $category, Product $product)
+    {
+        
+        $category->products()->detach($product);
+
+        return redirect('/categories/'.$category->name);
+    
+    }
 
 
     public function destroy(Category $category)
