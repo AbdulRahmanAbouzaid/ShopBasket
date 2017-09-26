@@ -3,12 +3,10 @@ E-Shopping | PHP&amp;Laravel
 
 I've attached the DataBase i created with that repo 
 
-<ol>
 # There are Three Types of users:
 <li> Visitors/Guests </li>
 <li> Customers </li>
 <li> Admin </li>
-</ol>
 
 ## Visitors
 can only view the Categories and products with no action. And of cours any visitor can sign up to be a Customer
