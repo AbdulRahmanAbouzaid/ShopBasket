@@ -9,7 +9,7 @@ I've attached the DataBase i created with that repo
 <li> Admin </li>
 
 ## Visitors
-can only view the Categories and products with no action. And of cours any visitor can sign up to be a Customer
+can only view the Categories and products with no action. And of course any visitor can sign up to be a Customer via sign up form ( you can see it in the top right corner).
 
 ## Customers 
 Is a member who can get a basket Can add any product to his/her Basket and confirm Purchasing when he/she wants and an invoice will be created for them. 
