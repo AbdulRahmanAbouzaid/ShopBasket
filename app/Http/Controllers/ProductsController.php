@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 
+use App\Http\Requests\ProductRequest;
+
 class ProductsController extends Controller
 {
 
@@ -17,6 +19,9 @@ class ProductsController extends Controller
     }
 
 
+    /***********************
+    show Product Information
+    ************************/
     public function show(Product $product)
     {
 
@@ -24,19 +29,28 @@ class ProductsController extends Controller
 
     }
 
+
+    /*********************** 
+    View Product Creation Form 
+    ***************************/
     public function create()
     {
 
         if(!auth()->user()->is_admin){
 
-            return redirect('/');
+            return back();
 
         }
 
     	return view('products.addProduct');
     }
 
-    public function store()
+
+
+    /***********************
+     Create New Product 
+     **********************/
+    public function store(ProductRequest $form)
     {
 
         if(!auth()->user()->is_admin){
@@ -45,23 +59,18 @@ class ProductsController extends Controller
 
         }
     	
-    	$this->validate(request(), [
-    		
-    		'discount_pct' => 'integer|between:0,100'
 
-    	]);
-
-        $product = new Product(request(['code', 'name', 'price', 'quantity', 'discount_pct']));
-
-        $product->save();
-
-        $product->categories()->attach(request('category'));
+        $form->saving();
 
         return redirect('/');
 
 
     }
 
+
+    /***********************
+    Viewing Update Product Form
+    *************************/ 
     public function update(Product $product)
     {
 
@@ -75,35 +84,23 @@ class ProductsController extends Controller
 
     }
 
-    public function confirmUpdate(Product $product)
+
+    /*******************************************************
+    update given Product Using UpdateProductRequest Form Request
+    ********************************************************/
+    public function confirmUpdate(Product $product, ProductRequest $form)
     {
 
-        if(!auth()->user()->is_admin){
-
-            return redirect('/');
-
-        }
+        $form->update($product);
         
-        $product->name = request('name');
-
-        $product->code = request('code');
-
-        $product->discount_pct = request('discount_pct');
-
-        $product->price = request('price');
-
-        $product->quantity = request('quantity');       
-
-        $product->save();
-
-        $product->categories()->detach();
-
-        $product->categories()->attach(request('category'));
-
         return redirect('/');
+
     }
 
 
+    /***********************
+    Delete Given Product
+    ***********************/
     public function destroy(Product $product)
     {
 
@@ -112,6 +109,10 @@ class ProductsController extends Controller
             return redirect('/');
 
         }
+
+        $product->categories()->detach();
+
+        $product->baskets()->detach();       
         
         $product->delete();
 

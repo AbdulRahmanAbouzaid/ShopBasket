@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Http\Requests\RegisterRequest;
+
 
 class LogsController extends Controller
 {
@@ -17,7 +19,9 @@ class LogsController extends Controller
     }
 
 
-    
+    /********************
+    view Login/signup form
+    **************************/
     public function viewForm()
     {
     	
@@ -25,6 +29,10 @@ class LogsController extends Controller
 
     }
 
+
+    /************************
+    authenticate Users 
+    **********************/
     public function restore(){
 
     	if(auth()->attempt(request(['name', 'password'])))
@@ -37,38 +45,31 @@ class LogsController extends Controller
 
     }
 
-    public function store()
+
+    /**************************************************
+    Regesterin users using RegisterRequest form Request 
+    ***************************************************/
+    public function store(RegisterRequest $form)
 
     {
 
-        $this->validate(request(), [
+        if(User::where('name',request('u_name'))->first()){
 
-            'name' => 'required',
+            return back()->withErrors('User is Already Exist');
 
-            'password' => 'required|confirmed'
+        }
 
-        ]);
-
-
-        $user = new User([
-
-            'name' => request('name'),
-
-            'password' => \Hash::make(request('password')),
-
-            'is_admin' => false
-
-            ]);
-
-        $user->save();
-
-        auth()->login($user);
+        $form->register();
 
         return redirect('/');
 
     }
 
 
+
+    /************
+        logout
+    ****************/
     public function destroy()
     {
         

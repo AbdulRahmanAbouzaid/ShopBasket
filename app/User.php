@@ -28,6 +28,9 @@ class User extends Authenticatable
     ];
 
 
+   /*******************************************
+    User Can Have Many Baskets
+    ******************************************/
     public function baskets()
     {
 
@@ -36,9 +39,12 @@ class User extends Authenticatable
     }
 
 
+
+    /**********************************************
+    Get The Current Basket of the logged-in user OR create new One for him
+    ***********************************************/
     public function getCurrentBasket()
     {
-        //$this->baskets()->where('status','hangin')
 
         $basket = $this->baskets()
                        ->where('status','hanging')
@@ -49,7 +55,7 @@ class User extends Authenticatable
             
             $newBasket = new Basket([
                 
-                'number' => 4,
+                'number' => hexdec(uniqid()),
                 'status' => 'hanging'
 
             ]);

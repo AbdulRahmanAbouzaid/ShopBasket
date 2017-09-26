@@ -33,29 +33,43 @@
 
 						</span>
 
+
+
 						<form action="/basket/add-product/{{$product->id}}" method="POST">
+							<div class="row"> 
+								{{ csrf_field() }}
+								
+								@if(auth()->check() && !auth()->user()->is_admin)
 
-							{{ csrf_field() }}
-					
-							<label>Quantity:</label>
-						
-							<input type="number" name="quantity" value="1" min="1" max="{{$product->quantity}}" />
-						
-							<button type="submit" class="btn btn-fefault cart" name="addCart">
-						
-								<i class="fa fa-shopping-cart"></i>
-						
-								Add to cart
-						
-							</button>
+									<div class="col-sm-6">
+										<label>Quantity:</label>
+									
+										<input type="number" name="quantity" value="1" min="1" max="{{$product->quantity}}" />
+									</div>
 
+									<div class="col-sm-6">
+								
+										<button type="submit" class="btn btn-default" name="addCart" style="background-color: #e83030; color: #fff; border: 0px">
+									
+											<i class="fa fa-shopping-cart"></i> Add to Basket
+									
+										</button>
 
+									</div>
+
+								@endif
+
+							</div>
 
 						</form>
 
-						<a href="/products/delete/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Delete Product</a>
+						<br/>
 
-						<a href="/products/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>update Product</a>
+						@if(auth()->check() && auth()->user()->is_admin)
+							<a href="/products/delete/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Delete Product</a>
+
+							<a href="/products/update/{{$product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>update Product</a>
+						@endif
 					
 					</span>
 					

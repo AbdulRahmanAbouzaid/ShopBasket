@@ -19,6 +19,15 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('index', function($view){
 
             $products = \App\Product::all();
+            
+            foreach ($products as $product) {
+               
+               if(!$product->categories()->first()){
+                    
+                    $product->delete();
+                }
+
+            }
 
             $view->with(compact('products'));
 

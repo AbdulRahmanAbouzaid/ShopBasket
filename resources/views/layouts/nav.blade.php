@@ -1,4 +1,4 @@
-<div class="header-middle"><!--header-middle-->
+<div class="header"><!--header-->
 
 	<div class="container">
 
@@ -22,25 +22,36 @@
 
 			<div class="col-sm-8">
 
-				<div class="shop-menu pull-right">
+				<div class="menu pull-right">
 
 					<ul class="nav navbar-nav">
 
-						@if(auth()->check())
 
-							<li><a href="#" class="{{$account_active or ''}}"><i class="fa fa-user"></i>
-								{{auth()->user()->name}}	
-							</a></li>
-
-						@endif
-
-						<li><a href="#" class="{{$products_active or ''}}"><i class="fa fa-barcode"></i> Products</a></li>
+						<li><a href="/" class="{{$home_active or ''}}"><i class="fa fa-home"></i>Home</a></li>
 
 						<li><a href="/categories" class="{{$categories_active or ''}}"><i class="fa fa-th-large"></i> Categories</a></li>
 
-						<li><a href="/basket" class="{{$basket_active or ''}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+						@if(auth()->check() && auth()->user()->is_admin)
+						
+							<li><a href="/products/create" class="{{$products_active or ''}}"><i class="glyphicon glyphicon-plus"></i> Add Product</a></li>
+						
+						@endif
 
-						<li><a href="/login" class="{{$login_active or ''}}"><i class="fa fa-lock"></i> Login</a></li>
+						@if(auth()->check())
+
+							<li><a href="/basket" class="{{$basket_active or ''}}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+
+							<li><a href="#"><i class="fa fa-user"></i> {{auth()->user()->name}}</a></li>
+
+							<li><a href="/logout"><i class="fa fa-lock">
+							</i> Logout</a></li>
+
+						@else
+
+							<li><a href="/login" class="{{$login_active or ''}}"><i class="fa fa-lock">
+							</i> Login</a></li>
+
+						@endif
 
 					</ul>
 

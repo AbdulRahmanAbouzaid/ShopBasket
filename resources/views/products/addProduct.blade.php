@@ -1,3 +1,5 @@
+<?php $products_active = "active"; ?>
+
 @extends('layouts.master')
 
 @section('content')
@@ -13,7 +15,7 @@
 
 			<h2 class="title text-center">Add New Product</h2>
 
-			<div class="status alert alert-success" style="display: none"></div>
+			@include('layouts.errors')
 
 	    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" action="/products">
 
@@ -39,7 +41,7 @@
 	           
 	            	<label for="price" class="col-md-4">Product Price</label>
 	           
-	                <input type="number" name="price" class="col-md-8" required="required" placeholder="Product Price">
+	                <input type="number" name="price" class="col-md-8" required="required" placeholder="Product Price" step="any">
 	           
 	            </div>
 	           
@@ -48,7 +50,7 @@
 	            	<label for="discount_pct" class="col-md-4">Product Discount</label>
 	           
 	                <input type="number" name="discount_pct" class="col-md-8" required="required" placeholder=
-	                "Discount Percentage" value="0">
+	                "Discount Percentage" value="0" step="any">
 	            
 	            </div>
 	            

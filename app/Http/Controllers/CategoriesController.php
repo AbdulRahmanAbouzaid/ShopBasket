@@ -18,23 +18,44 @@ class CategoriesController extends Controller
     }
 
 
+
+    /**************************************************
+    Get All Categories for Admin , 
+    and Get only ones that have products for Customers or Visitors
+     *************************************************/
     public function getCategories(){
 
-    	$categories = Category::has('products')->get();
+        if(auth()->check() && auth()->user()->is_admin){
 
-    	return view('categories.allCategories', compact('categories'));
+            $categories = Category::all();
+
+        }else{
+            
+            $categories = Category::has('products')->get();
+
+        }
+
+    	return view('categories.categories-grid', compact('categories'));
 
     }
 
+
+
+    /**********************************************
+     Viewing Category Info. including its Products 
+     **********************************************/
     public function viewCategory(Category $category)
     {
     
-    	$category_products = $category->products;
     	
-    	return view('categories.viewCategory', compact(['category','category_products']));
+    	return view('categories.viewCategory', compact('category'));
 
     }
 
+
+    /**********************************************
+     Viewing Category Creation Form 
+     ***************************************/
     public function create()
     {
         
@@ -48,6 +69,10 @@ class CategoriesController extends Controller
 
     }
 
+
+    /**********************************************
+    Create category and store it 
+    ****************************************/
     public function store()
     {
 
@@ -70,6 +95,10 @@ class CategoriesController extends Controller
     }
 
 
+
+    /**********************************************
+    Viewing Updating Category Form 
+    *****************************************/
     public function update(Category $category)
     {
 
@@ -83,6 +112,10 @@ class CategoriesController extends Controller
         
     }
 
+
+    /**********************************************
+    Confirming the Updates of a category 
+    *********************************************/
     public function confirmUpdate(Category $category)
     {
 
@@ -106,6 +139,10 @@ class CategoriesController extends Controller
     }
 
 
+
+    /**********************************************
+    Deleting Products from a Category 
+    *********************************************/
     public function detachProduct(Category $category, Product $product)
     {
         
@@ -116,6 +153,10 @@ class CategoriesController extends Controller
     }
 
 
+
+    /**********************************************
+    Deleting The Whole Category 
+    **************************************/
     public function destroy(Category $category)
     {
 

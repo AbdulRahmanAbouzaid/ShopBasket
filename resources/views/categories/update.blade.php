@@ -9,13 +9,13 @@
 
 	<div class="col-sm-8">
 
-		<div class="contact-form">
+		<div class="main-form">
 
 			<h2 class="title text-center">Add New Category</h2>
 
-			<div class="status alert alert-success" style="display: none"></div>
+			@include('layouts.errors')
 
-	    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" action="/categories/update/{{$category->name}}">
+	    	<form id="main-form" class="main-form row" name="update-form" method="post" action="/categories/update/{{$category->name}}">
 
 	    		{{ csrf_field() }}
 

@@ -1,3 +1,5 @@
+<?php $login_active = "active"; ?>
+
 @extends('layouts.master')
 
 @section('content')
@@ -7,13 +9,15 @@
 		<div class="container">
 	
 			<div class="row">
+
+				@include('layouts.errors')
 	
 				<div class="col-sm-4 col-sm-offset-1">
+
 	
 					<div class="login-form"><!--login form-->
 	
 						<h2>Login to your account</h2>
-
 
 
 						<form action="/login" method="post">

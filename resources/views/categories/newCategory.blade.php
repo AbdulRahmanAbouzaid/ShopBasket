@@ -9,13 +9,15 @@
 
 	<div class="col-sm-8">
 
-		<div class="contact-form">
+		<div class="main-form">
 
 			<h2 class="title text-center">Add New Category</h2>
 
+			@include('layouts.errors')
+
 			<div class="status alert alert-success" style="display: none"></div>
 
-	    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post" action="/categories">
+	    	<form id="main-form" class="main-form row" name="main-form" method="post" action="/categories">
 
 	    		{{ csrf_field() }}
 
@@ -23,7 +25,7 @@
 
 	            	<label for="name" class="col-md-4">Category Name</label>
 
-	                 <input type="text" name="name" class="col-md-8" required="required" placeholder="Product Name">
+	                 <input type="text" name="name" class="col-md-8" placeholder="Product Name" required>
 	           
 	            </div>
 	           
@@ -31,7 +33,7 @@
 	           
 	            	<label for="code" class="col-md-4">Category Code</label>
 	           
-	                <input type="number" name="code" class="col-md-8" required="required" placeholder="Product Code">
+	                <input type="number" name="code" class="col-md-8" placeholder="Product Code" required>
 	           
 	            </div>
 	           
@@ -40,7 +42,7 @@
 	           
 	            	<label for="max_discount_pct" class="col-md-4">Max Product Discount</label>
 	           
-	                <input type="number" name="max_discount_pct" class="col-md-8" required="required" placeholder="Max Discount Percentage" value="0" step="any">
+	                <input type="number" name="max_discount_pct" class="col-md-8" placeholder="Max Discount Percentage" value="0" step="any" required>
 	            
 	            </div>   
                  

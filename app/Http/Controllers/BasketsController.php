@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Basket;
 use App\Product;
 use App\Invoice;
+use App\Repositories\Invoices;
 
 class BasketsController extends Controller
 {
@@ -17,6 +18,7 @@ class BasketsController extends Controller
 
         $this->middleware('auth');
 
+        //Get the active Basket 
         $this->middleware(function ($request, $next) {
             
             $this->basket = auth()->user()->getCurrentBasket();
@@ -26,6 +28,11 @@ class BasketsController extends Controller
     }
 
 
+
+
+    /************************************
+    ***     Show The User's basket    ***  
+    ************************************/
 	public function show()
     {       
 
@@ -35,11 +42,31 @@ class BasketsController extends Controller
 
     }
 
+
+
+
+    /************************************
+    ***  adding Product To the Basket ***
+    ************************************/
     public function addProduct(Product $product)
     {
-    	
 
-    	$this->basket->products()->attach($product,['quantity' => request('quantity')]);
+        $basket =$this->basket;
+
+        $requested_quantity = request('quantity');
+
+        $existed_product = $basket->products()->where('id',$product->id)->first();
+
+    	if($existed_product){
+
+            $requested_quantity += $existed_product->pivot->quantity;
+
+            $this->basket->products()->detach($product);
+
+        }
+
+        $this->basket->products()->attach($product,['quantity' => $requested_quantity]);
+
 
     	return redirect('/basket');
 
@@ -47,6 +74,10 @@ class BasketsController extends Controller
 
 
 
+
+    /************************************
+    |   delete Product from The Basket  |
+    ************************************/
     public function detachProduct(Product $product)
     {
 
@@ -57,22 +88,17 @@ class BasketsController extends Controller
     }
 
 
-    public function confirmPurchase()
+ 
+
+    /*************************************
+    | Confirming Purshase ,               |
+    | create the Invoice and              |
+    | Decrease the quantity of Product    |
+    **************************************/
+    public function confirmPurchase(Invoices $invoice)
     {
 
-        $invoice = Invoice::create([
-
-            'inv_number' => hexdec(uniqid()),
-
-            'basket_id' => $this->basket->id,
-
-            'inv_total' => $this->basket->totalActualPrice(),
-
-            'inv_discount' => $this->basket->discountPercentage(),
-
-            'inv_net' => $this->basket->totalNetPrice()
-
-        ]);
+        $invoice = $invoice->create($this->basket);
 
         $this->basket->status = 'confirmed';
 
@@ -81,12 +107,17 @@ class BasketsController extends Controller
             $product->decreaseQuantity();
             
         }
+        $this->basket->save();
 
         return redirect('/basket/invoice/'.$invoice->id);
 
     }
 
 
+
+    /***********************
+    |     show invoice     |
+    ***********************/
     public function showInvoice(Invoice $invoice)
     {
         
@@ -95,6 +126,10 @@ class BasketsController extends Controller
 
 
 
+
+    /***********************
+    |   Cancel The Basket  |
+    ***********************/
     public function cancelling()
     {
         
@@ -107,6 +142,9 @@ class BasketsController extends Controller
     }
 
 
+    /***********************
+    |   Delete The Basket  |
+    ***********************/
     public function destroy()
     {
 

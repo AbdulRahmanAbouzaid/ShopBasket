@@ -3,37 +3,33 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Http\Request;
 
 
 class Product extends Model
 {
     protected $guarded = []; 
 
-
-    // public function scopeProducts()
-    // {
-        
-    //     Post::all();
-
-    // }
-
-
-    /* A Product May Belongs To Many Categories */
+    /**********************************************
+    /* A Product May Belongs To Many Categories ***
+    ***********************************************/
     public function categories(){
 
     	return $this->belongsToMany(Category::class);
     }
 
 
-
-    /* A Product May be Added To Many Baskets */
+/**********************************************
+     A Product May be Added To Many Baskets 
+***********************************************/
     public function baskets(){
 
         return $this->belongsToMany(Basket::class);
     }
 
-
-    /*Return True if a Product has Discount and fals if not*/
+/************************************************************
+   Return True if a Product has Discount and fals if not  ***
+************************************************************/
     public function hasDiscount()
     {
 
@@ -57,7 +53,10 @@ class Product extends Model
         
     }
 
-    /* If Product has Discount, Return The New Price .. If not, Return actual price */
+
+    /***********************************************************************************
+    /* If Product has Discount, Return The New Price .. If not, Return actual price ****
+    ************************************************************************************/
     public function netPrice(){
 
         $price = $this->price;
@@ -74,7 +73,9 @@ class Product extends Model
 
     }
 
-
+/**********************************************
+    get The total Price of required quantities 
+***********************************************/
     public function quantitiesPrice()
     {
         
@@ -82,14 +83,26 @@ class Product extends Model
     }
 
 
+
+    /**********************************************
+     Decreasing Quantities after Confrim Purchasing
+    **********************************************/
     public function decreaseQuantity()
     {
         
         $quantity = $this->quantity - $this->pivot->quantity;
 
-        $this->quantity = $quantity;
+        if($quantity === 0){
 
-        $this->save(); 
+            $this->delete();
+
+        }else{
+
+            $this->quantity = $quantity;
+
+            $this->save();
+
+        } 
 
     }
 

@@ -8,7 +8,11 @@ class Basket extends Model
 {
 	protected $guarded = [];
 
-    /* A Basket Contains Multiple Products */
+
+
+    /************************************
+    ***  A Basket Has many Products   ***
+    ************************************/
     public function products()
     {
     	
@@ -16,13 +20,26 @@ class Basket extends Model
 
     }
 
+
+    /**********************************************
+    /* A Basket Belongs To only one Customer ******
+    **********************************************/
     public function customer()
     {
         return $this->belongsTo(User::class);
     }
 
 
-    /* Get The Basket That the User should Use*/
+    public function invoice(){
+        return $this->belongsTo(Invoice::class);
+
+    }
+
+
+
+    /**********************************************
+    *** Get The User's Basket Or Create New One ***
+    **********************************************/
     public function scopeGetCurrentBasket($user_id = null)
     {
 
@@ -43,7 +60,12 @@ class Basket extends Model
     
 	}
 
-    /* Get Basket Price Before Discount */
+
+
+
+    /*************************************
+    /* Get Basket Price Before Discount **
+    *************************************/
     public function totalActualPrice()
     {
 
@@ -63,7 +85,12 @@ class Basket extends Model
 
     }
 
-    /* Get Basket Price After Discount */
+
+
+
+    /************************************
+    /* Get Basket Price After Discount **
+    ************************************/
     public function totalNetPrice()
     {
 
@@ -84,6 +111,11 @@ class Basket extends Model
     }
 
 
+
+
+    /**************************************
+    /* Get The Whole Discount Percentage **
+    ***************************************/
     public function discountPercentage()
     {
 
